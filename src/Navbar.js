@@ -8,13 +8,40 @@ import SearchIcon from "@material-ui/icons/Search";
 import Switch from "@material-ui/core/Switch";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles/NavBarStyles";
+//import classes from "*.module.scss"
 
 class Navbar extends Component {
     render() {
+        const { classes } = this.props;
         return (
-            <div>Navbar</div>
+            <div className={classes.root}>
+                <AppBar position="static" color="primary">
+                    <Toolbar>
+                        <IconButton className={classes.menuButton} color="inherit">
+                            <span>🇫🇷</span>
+                        </IconButton>
+                        <Typography className={classes.title} variant='h6' color='inherit'>
+                            App Title
+                        </Typography>
+                        <Switch />
+                        <div className={classes.grow} />
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase placeholder='Search...' classes={{
+                                root: classes.inputRoote,
+                                input: classes.inputInput
+                            }} />
+                        </div>
+                    </Toolbar>
+                </AppBar>
+
+
+
+            </div>
         )
     }
 }
 
-export default Navbar;
+export default withStyles(styles)(Navbar);
