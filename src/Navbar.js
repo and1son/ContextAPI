@@ -10,6 +10,22 @@ import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles/NavBarStyles";
 //import classes from "*.module.scss"
 import { ThemeContext } from './contexts/ThemeContext'
+import { withLanguageContext } from './contexts/LanguageContext'
+
+const content = {
+    english: {
+        search: 'Search',
+        flag: 'GB'
+    },
+    french: {
+        search: 'Chercher',
+        flag: 'FR'
+    },
+    spanish: {
+        search: 'Buscar',
+        flag: 'SP'
+    }
+}
 
 class Navbar extends Component {
 
@@ -17,27 +33,31 @@ class Navbar extends Component {
 
     render() {
 
-        const { isDarkMode } = this.context
+        const { isDarkMode, toggleTheme } = this.context
 
         const { classes } = this.props;
+
+        const { language } = this.props.languageContext
+
+        const { search, flag } = content[language]
 
         return (
             < div className={classes.root} >
                 <AppBar position="static" color={isDarkMode ? "default" : "primary"}>
                     <Toolbar>
                         <IconButton className={classes.menuButton} color="inherit">
-                            <span>🇫🇷</span>
+                            <span>{flag}</span>
                         </IconButton>
                         <Typography className={classes.title} variant='h6' color='inherit'>
-                            App Title
+                            App Title {language}
                         </Typography>
-                        <Switch />
+                        <Switch onChange={toggleTheme} />
                         <div className={classes.grow} />
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
                             </div>
-                            <InputBase placeholder='Search...' classes={{
+                            <InputBase placeholder={`${search}...`} classes={{
                                 root: classes.inputRoote,
                                 input: classes.inputInput
                             }} />
@@ -52,4 +72,4 @@ class Navbar extends Component {
     }
 }
 
-export default withStyles(styles)(Navbar);
+export default withLanguageContext(withStyles(styles)(Navbar));
